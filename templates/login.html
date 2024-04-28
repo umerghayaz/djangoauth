@@ -1,0 +1,63 @@
+
+<h1>Login</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+{% block content %}
+    <style>
+        .login-box {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-content: center;
+            width: 100%;
+            padding-top: 20px;
+        }
+
+        .login-btn {
+            background-color: #ccc;
+            border: 1px solid #000;
+            border-radius: 4px;
+            padding: 7px;
+        }
+
+        .login-btn:hover {
+            background-color: #fff;
+        }
+
+        .btn-text {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+        }
+
+        .btn-label {
+            margin-right: 5px;
+            margin-left: 5px;
+            margin-top: 2px;
+            color: #000;
+        }
+
+        .login-btn a {
+            text-decoration: none;
+        }
+    </style>
+    <div class="login-box">
+        <div class="login-btn">
+            <a class="btn-text" href="{% url 'django_google_sso:oauth_start_login' %}" role="button">
+                login with google
+            </a>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(".btn-text").click(function (event) {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            event.originalEvent.currentTarget.href = event.originalEvent.currentTarget.href + "?next=" + urlParams.get('next');
+        });
+    </script>
+{% endblock content %}
+    <a href="{% url 'signup' %}">Dont have Account Create</a>
+</form>
